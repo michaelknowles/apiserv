@@ -20,6 +20,9 @@ type Group interface {
 	// Group returns a sub-group starting at the specified path with this group's middlewares + any other ones.
 	Group(path string, mw ...Handler) Group
 
+	// Routes returns the current routes set in this group.
+	Routes() [][]string
+
 	// AddRoute adds a handler (or more) to the specific method and path
 	// it is NOT safe to call this once you call one of the run functions
 	AddRoute(method, path string, handlers ...Handler) error
@@ -50,6 +53,11 @@ type group struct {
 // Use adds more middleware to the current group.
 func (g *group) Use(mw ...Handler) {
 	g.mw = append(g.mw, mw...)
+}
+
+// Routes returns the current routes set in this group.
+func (g *group) Routes() [][]string {
+	return g.Routes()
 }
 
 // AddRoute adds a handler (or more) to the specific method and path
